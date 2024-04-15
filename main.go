@@ -1,9 +1,11 @@
 package main
 
 import (
+	"EasyBlogs/tools"
 	"fmt"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io"
 	"net/http"
 	"os"
@@ -149,7 +151,10 @@ func copyPicture(blog Blog) {
 	}
 }
 
-func gitOperate() {
+func gitOperate(blogList []Blog) {
+	if len(blogList) == 0 {
+		return
+	}
 	repositoryPath, _ := filepath.Abs(".")
 	r, err := git.PlainOpen(repositoryPath)
 	if err != nil {
@@ -159,17 +164,35 @@ func gitOperate() {
 	w, err := r.Worktree()
 	if err != nil {
 		println("打开仓库失败")
+		println(err.Error())
 		return
 	}
-	_, err = w.Add(filepath.Join(repositoryPath, "resource"))
+
+	_, err = w.Add("./resource")
 	if err != nil {
 		println("向仓库添加文件失败")
+		println(err.Error())
 		return
 	}
-	statue, _ := w.Status()
-	println(statue.String())
+	status, _ := w.Status()
+	println(status.String())
 
-	commit, err := w.Commit("example go-git commit", &git.CommitOptions{
+	nameList := tools.Map(blogList, func(blog Blog) string {
+		return blog.name
+	})
+	var summary string
+	if len(nameList) == 1 {
+		summary = fmt.Sprintf("提交文件 [%s]", blogList[0].name)
+	} else {
+		summary = fmt.Sprintf(
+			"提交 %d 个文件\n"+
+				"\n"+
+				"文件列表: [%s]",
+			len(blogList),
+			strings.Join(nameList, ", "),
+		)
+	}
+	commit, err := w.Commit(summary, &git.CommitOptions{
 		Author: &object.Signature{
 			Name: "Wang",
 			When: time.Now(),
@@ -177,12 +200,34 @@ func gitOperate() {
 	})
 
 	obj, _ := r.CommitObject(commit)
-	println(obj)
+	println("提交文件：")
+	println(obj.String())
+
+	// user必须是"git"。。。困扰了半天，最后查issue发现的。真够郁闷的。
+	privateKey, err := ssh.NewPublicKeysFromFile("git", "./githubPublicKey", "")
+
+	if err != nil {
+		println(err.Error())
+	}
+
+	err = r.Push(&git.PushOptions{
+		RemoteName: "origin",
+		RemoteURL:  `git@github.com:buttering/EasyBlogs.git`,
+		Auth:       privateKey,
+		Progress:   os.Stdout,
+	})
+	if err != nil {
+		println("上传失败")
+		println(err.Error())
+		return
+	}
+
+	println("提交成功！")
 }
 
 func main() {
-	//filePath := "E:/desktop"
-	//blogList := getBlogList(filePath)
+	filePath := "E:/desktop"
+	blogList := getBlogList(filePath)
 	//for _, blog := range blogList {
 	//	extractPicture(&blog)
 	//	println(blog.name, blog.pictures, blog.directoryPath, blog.targetPath)
@@ -193,5 +238,5 @@ func main() {
 	//	copyPicture(blog)
 	//}
 
-	gitOperate()
+	gitOperate(blogList)
 }
