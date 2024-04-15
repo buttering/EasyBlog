@@ -159,11 +159,14 @@ func gitOperate() {
 	w, err := r.Worktree()
 	if err != nil {
 		println("打开仓库失败")
+		println(err)
 		return
 	}
-	_, err = w.Add(filepath.Join(repositoryPath, "resource"))
+
+	_, err = w.Add(".")
 	if err != nil {
 		println("向仓库添加文件失败")
+		println(err)
 		return
 	}
 	statue, _ := w.Status()
@@ -177,7 +180,17 @@ func gitOperate() {
 	})
 
 	obj, _ := r.CommitObject(commit)
+	println("提交文件：")
 	println(obj)
+
+	err = r.Push(&git.PushOptions{
+		RemoteName: "origin",
+	})
+	if err != nil {
+		println("上传失败")
+		println(err)
+		return
+	}
 }
 
 func main() {
