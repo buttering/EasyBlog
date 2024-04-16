@@ -28,6 +28,7 @@ type Blog struct {
 	pictures      []markdownPicture
 	directoryPath string // 源文件文件夹路径
 	targetPath    string // resource中文件夹的绝对路径
+	legal         bool   // 成功通过解析
 }
 
 func getBlogList(path string) (blogsList []Blog) {
@@ -44,7 +45,7 @@ func getBlogList(path string) (blogsList []Blog) {
 
 			targetPath, _ := filepath.Abs(".")
 			targetPath = filepath.Join(targetPath, "resource", fileName[:len(fileName)-3])
-			blogsList = append(blogsList, Blog{fileName, nil, path, targetPath})
+			blogsList = append(blogsList, Blog{fileName, nil, path, targetPath, false})
 		}
 	}
 	return
@@ -79,18 +80,22 @@ func extractPicture(blog *Blog) {
 		blog.pictures = append(blog.pictures, markdownPicture{isUrl(picturePath), picturePath, start, end, newPicturePath})
 
 	}
+
+	blog.legal = true
 }
 
-func copyBlog(blog Blog) {
+func copyBlog(blog *Blog) {
 	println("拷贝博客：“" + blog.name + "”")
 
 	if _, err := os.Stat(blog.targetPath); !os.IsNotExist(err) {
 		println("文章“" + blog.name + "”已经存在")
+		blog.legal = false
 		return
 	}
 
 	if err := os.Mkdir(blog.targetPath, 0777); err != nil {
 		println("创建文件夹“" + blog.name + "”失败")
+		blog.legal = false
 		return
 	}
 
@@ -109,6 +114,7 @@ func copyBlog(blog Blog) {
 	err := os.WriteFile(filepath.Join(blog.targetPath, blog.name), content, 0644)
 	if err != nil {
 		println("复制文件“" + blog.name + "”错误")
+		blog.legal = false
 	}
 
 }
@@ -149,6 +155,24 @@ func copyPicture(blog Blog) {
 			println("复制图片“" + picture.pictureName + "”失败")
 		}
 	}
+}
+
+func yamlOperate(yamlPath string, blogList []Blog) {
+	println("生成yaml文件")
+	yamlStruct := tools.YamlReader(yamlPath)
+	// 不变更已有的，只追加
+	for _, blog := range blogList {
+		if !blog.legal {
+			continue
+		}
+		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
+			Name:       blog.name,
+			CreateDate: time.Now().Format("2003-01-02"),
+			UpdateDate: time.Now().Format("2003-01-02"),
+		})
+	}
+	tools.YamlWriter(yamlPath, &yamlStruct)
+
 }
 
 func gitOperate(blogList []Blog) {
@@ -227,16 +251,22 @@ func gitOperate(blogList []Blog) {
 
 func main() {
 	filePath := "E:/desktop"
+	yamlPath := "./resource/blogs-list.yaml"
 	blogList := getBlogList(filePath)
-	//for _, blog := range blogList {
-	//	extractPicture(&blog)
-	//	println(blog.name, blog.pictures, blog.directoryPath, blog.targetPath)
-	//	println(blog.pictures[0].pictureName, blog.pictures[0].targetName)
-	//	println(blog.pictures[1].pictureName, blog.pictures[1].targetName)
-	//	println(blog.pictures[2].pictureName, blog.pictures[2].targetName)
-	//	copyBlog(blog)
-	//	copyPicture(blog)
-	//}
+	for i := range blogList {
+		extractPicture(&blogList[i])
+		//println(blog.name, blog.pictures, blog.directoryPath, blog.targetPath)
+		//println(blog.pictures[0].pictureName, blog.pictures[0].targetName)
+		//println(blog.pictures[1].pictureName, blog.pictures[1].targetName)
+		//println(blog.pictures[2].pictureName, blog.pictures[2].targetName)
+		copyBlog(&blogList[i])
+		copyPicture(blogList[i])
+	}
+	if len(blogList) == 0 {
+		return
+	}
 
-	gitOperate(blogList)
+	yamlOperate(yamlPath, blogList)
+	//gitOperate(blogList)
+
 }
