@@ -6,10 +6,13 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
+	"github.com/google/uuid"
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -71,11 +74,17 @@ func extractPicture(blog *Blog) {
 		end := match[3]
 
 		picturePath := string(content[start:end])
-		baseName := filepath.Base(picturePath)
-		newPicturePath := baseName[:len(baseName)-len(filepath.Ext(baseName))]
-		newPicturePath = fmt.Sprintf("%s%s", newPicturePath, filepath.Ext(baseName)) // 可以添加时间戳
+		var newPicturePath string
 		if !isUrl(picturePath) && !filepath.IsAbs(picturePath) {
+			newPicturePath = uuid.New().String() + filepath.Ext(picturePath)
 			picturePath = filepath.Join(blog.directoryPath, picturePath)
+		} else {
+			u, err := url.Parse(picturePath)
+			if err != nil {
+				println("解析图片url：", picturePath, " 失败")
+				continue
+			}
+			newPicturePath = uuid.New().String() + path.Ext(path.Base(u.Path))
 		}
 
 		blog.pictures = append(blog.pictures, markdownPicture{isUrl(picturePath), picturePath, start, end, newPicturePath})
@@ -86,7 +95,7 @@ func extractPicture(blog *Blog) {
 }
 
 func copyBlog(blog *Blog) {
-	println("拷贝博客：“" + blog.name + "”")
+	fmt.Println("拷贝博客：“" + blog.name + "”")
 
 	if _, err := os.Stat(blog.targetPath); !os.IsNotExist(err) {
 		println("文章“" + blog.name + "”已经存在")
@@ -123,7 +132,7 @@ func copyBlog(blog *Blog) {
 func copyPicture(blog Blog) {
 
 	for _, picture := range blog.pictures {
-		println("导入图片：“" + picture.pictureName + "”")
+		fmt.Println("导入图片：“" + picture.pictureName + "”")
 
 		var sourceFile interface{}
 		if picture.isUrl {
@@ -159,7 +168,7 @@ func copyPicture(blog Blog) {
 }
 
 //func yamlOperate(yamlPath string, blogList []Blog) {
-//	println("生成yaml文件")
+//	fmt.Println("生成yaml文件")
 //	yamlStruct := tools.YamlReader(yamlPath)
 //	// 不变更已有的，只追加
 //	for _, blog := range blogList {
@@ -177,7 +186,7 @@ func copyPicture(blog Blog) {
 //}
 
 func dbOperate(blogList []Blog) {
-	println("导入数据库")
+	fmt.Println("导入数据库")
 	db := tools.GetConnection()
 	defer db.Close()
 	for _, blog := range blogList {
@@ -185,7 +194,7 @@ func dbOperate(blogList []Blog) {
 			continue
 		}
 		now := time.Now().Format("2006-01-02")
-		_, err := db.Exec(tools.InsertBlog, blog.name, tools.Published, now, now)
+		_, err := db.Exec(tools.InsertBlog, blog.name, tools.Published, now, now, 0, 0, "Wang Jiawei")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -216,6 +225,7 @@ func gitOperate(blogList []Blog) {
 		return
 	}
 	status, _ := w.Status()
+	println("git 状态：")
 	println(status.String())
 
 	nameList := tools.Map(blogList, func(blog Blog) string {
@@ -241,8 +251,8 @@ func gitOperate(blogList []Blog) {
 	})
 
 	obj, _ := r.CommitObject(commit)
-	println("提交文件：")
-	println(obj.String())
+	fmt.Println("提交文件：")
+	fmt.Println(obj.String())
 
 	// user必须是"git"。。。困扰了半天，最后查issue发现的。真够郁闷的。
 	privateKey, err := ssh.NewPublicKeysFromFile("git", "./resource/githubPublicKey", "")
@@ -251,19 +261,24 @@ func gitOperate(blogList []Blog) {
 		println(err.Error())
 	}
 
-	err = r.Push(&git.PushOptions{
-		RemoteName: "origin",
-		RemoteURL:  `git@github.com:buttering/EasyBlogs.git`,
-		Auth:       privateKey,
-		Progress:   os.Stdout,
-	})
+	for i := 0; i < 3; i++ {
+		err = r.Push(&git.PushOptions{
+			RemoteName: "origin",
+			RemoteURL:  `git@github.com:buttering/EasyBlogs.git`,
+			Auth:       privateKey,
+			Progress:   os.Stdout,
+		})
+		if err == nil {
+			break
+		}
+		println("第 %d 次上传失败")
+	}
 	if err != nil {
-		println("上传失败")
-		println(err.Error())
+		println("重试次数已达上限，上传失败")
 		return
 	}
 
-	println("提交成功！")
+	fmt.Println("提交成功！")
 }
 
 func main() {

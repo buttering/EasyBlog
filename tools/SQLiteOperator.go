@@ -11,12 +11,12 @@ type Status int
 
 const (
 	InsertBlog = `
-		INSERT INTO Blog (title, status, createDate, updateDate)
-		VALUES (?, ?, ?, ?)`
+		INSERT INTO Blog (title, status, createDate, updateDate, views, likes, author)
+		VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	InsertTarget = `
 		INSERT INTO blog_target(blog_id, target)
-		VALUES (?, ?)
+		VALUES (?, ?, ?, ?)
 	`
 )
 
