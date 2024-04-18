@@ -7,6 +7,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -27,7 +28,7 @@ type Blog struct {
 	name          string
 	pictures      []markdownPicture
 	directoryPath string // 源文件文件夹路径
-	targetPath    string // resource中文件夹的绝对路径
+	targetPath    string // asset中文件夹的绝对路径
 	legal         bool   // 成功通过解析
 }
 
@@ -44,7 +45,7 @@ func getBlogList(path string) (blogsList []Blog) {
 			fileName := file.Name()
 
 			targetPath, _ := filepath.Abs(".")
-			targetPath = filepath.Join(targetPath, "resource", fileName[:len(fileName)-3])
+			targetPath = filepath.Join(targetPath, "asset", fileName[:len(fileName)-3])
 			blogsList = append(blogsList, Blog{fileName, nil, path, targetPath, false})
 		}
 	}
@@ -157,22 +158,38 @@ func copyPicture(blog Blog) {
 	}
 }
 
-func yamlOperate(yamlPath string, blogList []Blog) {
-	println("生成yaml文件")
-	yamlStruct := tools.YamlReader(yamlPath)
-	// 不变更已有的，只追加
+//func yamlOperate(yamlPath string, blogList []Blog) {
+//	println("生成yaml文件")
+//	yamlStruct := tools.YamlReader(yamlPath)
+//	// 不变更已有的，只追加
+//	for _, blog := range blogList {
+//		if !blog.legal {
+//			continue
+//		}
+//		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
+//			Name:       blog.name,
+//			CreateDate: time.Now().Format("2006-01-02"),
+//			UpdateDate: time.Now().Format("2006-01-02"),
+//		})
+//	}
+//	tools.YamlWriter(yamlPath, &yamlStruct)
+//
+//}
+
+func dbOperate(blogList []Blog) {
+	println("导入数据库")
+	db := tools.GetConnection()
+	defer db.Close()
 	for _, blog := range blogList {
 		if !blog.legal {
 			continue
 		}
-		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
-			Name:       blog.name,
-			CreateDate: time.Now().Format("2003-01-02"),
-			UpdateDate: time.Now().Format("2003-01-02"),
-		})
+		now := time.Now().Format("2006-01-02")
+		_, err := db.Exec(tools.InsertBlog, blog.name, tools.Published, now, now)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
-	tools.YamlWriter(yamlPath, &yamlStruct)
-
 }
 
 func gitOperate(blogList []Blog) {
@@ -192,7 +209,7 @@ func gitOperate(blogList []Blog) {
 		return
 	}
 
-	_, err = w.Add("./resource")
+	_, err = w.Add("./asset")
 	if err != nil {
 		println("向仓库添加文件失败")
 		println(err.Error())
@@ -228,7 +245,7 @@ func gitOperate(blogList []Blog) {
 	println(obj.String())
 
 	// user必须是"git"。。。困扰了半天，最后查issue发现的。真够郁闷的。
-	privateKey, err := ssh.NewPublicKeysFromFile("git", "./githubPublicKey", "")
+	privateKey, err := ssh.NewPublicKeysFromFile("git", "./resource/githubPublicKey", "")
 
 	if err != nil {
 		println(err.Error())
@@ -250,15 +267,11 @@ func gitOperate(blogList []Blog) {
 }
 
 func main() {
-	filePath := "E:/desktop"
-	yamlPath := "./resource/blogs-list.yaml"
+	filePath := "E:/desktop/blog"
+	//yamlPath := "./asset/blogs-list.yaml"
 	blogList := getBlogList(filePath)
 	for i := range blogList {
 		extractPicture(&blogList[i])
-		//println(blog.name, blog.pictures, blog.directoryPath, blog.targetPath)
-		//println(blog.pictures[0].pictureName, blog.pictures[0].targetName)
-		//println(blog.pictures[1].pictureName, blog.pictures[1].targetName)
-		//println(blog.pictures[2].pictureName, blog.pictures[2].targetName)
 		copyBlog(&blogList[i])
 		copyPicture(blogList[i])
 	}
@@ -266,7 +279,8 @@ func main() {
 		return
 	}
 
-	yamlOperate(yamlPath, blogList)
-	//gitOperate(blogList)
+	//yamlOperate(yamlPath, blogList)
+	dbOperate(blogList)
+	gitOperate(blogList)
 
 }
