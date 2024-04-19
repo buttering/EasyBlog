@@ -6,7 +6,6 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
-	"github.com/google/uuid"
 	"io"
 	"log"
 	"net/http"
@@ -20,20 +19,27 @@ import (
 )
 
 type markdownPicture struct {
-	isUrl       bool
-	pictureName string // 源路径（包括文件名）
-	start       int    // md中源图片路径的起始偏移量
-	end         int
-	targetName  string // 修改后的文件名（不含路径）
+	isUrl             bool
+	sourcePicturePath string
+	start             int // md中源图片路径的起始偏移量
+	end               int
+	hashName          string // 均将包含后缀的文件名进行hash，且后拼接上原有后缀名
+	targetUrl         string // 修改后在github仓库中的url
 }
 
 type Blog struct {
 	name          string
+	hashName      string
 	pictures      []markdownPicture
 	directoryPath string // 源文件文件夹路径
-	targetPath    string // asset中文件夹的绝对路径
 	legal         bool   // 成功通过解析
 }
+
+var (
+	BLOG_PATH      string
+	PICTURE_PATH   string
+	REPOSITORY_URL string
+)
 
 func getBlogList(path string) (blogsList []Blog) {
 	blogsList = make([]Blog, 0, 10)
@@ -47,14 +53,13 @@ func getBlogList(path string) (blogsList []Blog) {
 		if !file.IsDir() && filepath.Ext(file.Name()) == ".md" {
 			fileName := file.Name()
 
-			targetPath, _ := filepath.Abs(".")
-			targetPath = filepath.Join(targetPath, "asset", fileName[:len(fileName)-3])
-			blogsList = append(blogsList, Blog{fileName, nil, path, targetPath, false})
+			blogsList = append(blogsList, Blog{fileName, tools.Hash(fileName), nil, path, false})
 		}
 	}
 	return
 }
 
+// https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/pictures/e8597689-0205-4a35-9076-09233385b7a4.png
 func extractPicture(blog *Blog) {
 	isUrl := func(path string) bool {
 		return strings.HasPrefix(path, `http://`) || strings.HasPrefix(path, `https://`)
@@ -74,21 +79,33 @@ func extractPicture(blog *Blog) {
 		end := match[3]
 
 		picturePath := string(content[start:end])
-		var newPicturePath string
-		if !isUrl(picturePath) && !filepath.IsAbs(picturePath) {
-			newPicturePath = uuid.New().String() + filepath.Ext(picturePath)
-			picturePath = filepath.Join(blog.directoryPath, picturePath)
-		} else {
+		var pictureName string
+		if isUrl(picturePath) {
 			u, err := url.Parse(picturePath)
 			if err != nil {
 				println("解析图片url：", picturePath, " 失败")
 				continue
 			}
-			newPicturePath = uuid.New().String() + path.Ext(path.Base(u.Path))
+			pictureName = path.Base(u.Path)
+		} else if filepath.IsAbs(picturePath) {
+			pictureName = filepath.Base(picturePath)
+		} else { // 相对路径的本地文件
+			picturePath = filepath.Join(blog.directoryPath, picturePath)
+			pictureName = filepath.Base(picturePath)
 		}
+		hashName := tools.Hash(pictureName) + path.Ext(pictureName)
 
-		blog.pictures = append(blog.pictures, markdownPicture{isUrl(picturePath), picturePath, start, end, newPicturePath})
-
+		blog.pictures = append(
+			blog.pictures,
+			markdownPicture{
+				isUrl(picturePath),
+				picturePath,
+				start,
+				end,
+				hashName,
+				path.Join(REPOSITORY_URL, blog.hashName, hashName),
+			},
+		)
 	}
 
 	blog.legal = true
@@ -97,19 +114,19 @@ func extractPicture(blog *Blog) {
 func copyBlog(blog *Blog) {
 	fmt.Println("拷贝博客：“" + blog.name + "”")
 
-	if _, err := os.Stat(blog.targetPath); !os.IsNotExist(err) {
+	blogTargetPath := filepath.Join(BLOG_PATH, blog.name)
+	pictureTargetPath := filepath.Join(PICTURE_PATH, blog.hashName)
+	if _, err := os.Stat(blogTargetPath); !os.IsNotExist(err) {
 		println("文章“" + blog.name + "”已经存在")
 		blog.legal = false
 		return
 	}
 
-	if err := os.Mkdir(blog.targetPath, 0777); err != nil {
-		println("创建文件夹“" + blog.name + "”失败")
+	if err := os.Mkdir(pictureTargetPath, 0777); err != nil {
+		println("为博客“" + blog.name + "”创建对应picture文件夹失败")
 		blog.legal = false
 		return
 	}
-
-	_ = os.Mkdir(filepath.Join(blog.targetPath, "pictures"), 0777)
 
 	content, _ := os.ReadFile(filepath.Join(blog.directoryPath, blog.name))
 
@@ -117,11 +134,11 @@ func copyBlog(blog *Blog) {
 	for _, picture := range blog.pictures {
 		start := picture.start + offset
 		end := picture.end + offset
-		content = append(content[:start], append([]byte(picture.targetName), content[end:]...)...)
-		offset += len(picture.targetName) - len(picture.pictureName)
+		content = append(content[:start], append([]byte(picture.targetUrl), content[end:]...)...)
+		offset += len(picture.targetUrl) - (end - start)
 	}
 
-	err := os.WriteFile(filepath.Join(blog.targetPath, blog.name), content, 0644)
+	err := os.WriteFile(blogTargetPath, content, 0644)
 	if err != nil {
 		println("复制文件“" + blog.name + "”错误")
 		blog.legal = false
@@ -130,14 +147,15 @@ func copyBlog(blog *Blog) {
 }
 
 func copyPicture(blog Blog) {
+	pictureTargetPath := filepath.Join(PICTURE_PATH, blog.hashName)
 
 	for _, picture := range blog.pictures {
-		fmt.Println("导入图片：“" + picture.pictureName + "”")
+		fmt.Println("导入图片：“" + picture.sourcePicturePath + "”")
 
 		var sourceFile interface{}
 		if picture.isUrl {
 			for i := 0; i < 5; i++ {
-				response, err := http.Get(picture.pictureName)
+				response, err := http.Get(picture.sourcePicturePath)
 				if err == nil && response.StatusCode == http.StatusOK {
 					sourceFile = response.Body
 					break
@@ -145,24 +163,23 @@ func copyPicture(blog Blog) {
 				time.Sleep(50 * time.Millisecond)
 			}
 			if sourceFile == nil {
-				println("下载图片“" + picture.pictureName + "”失败")
+				println("下载图片“" + picture.sourcePicturePath + "”失败")
 				continue
 			}
 
 		} else {
-			file, err := os.Open(picture.pictureName)
+			file, err := os.Open(picture.sourcePicturePath)
 			if err != nil {
-				println("打开图片“" + picture.pictureName + "”失败")
+				println("打开图片“" + picture.sourcePicturePath + "”失败")
 				continue
 			}
 			sourceFile = file
 		}
 
-		destinationFile, _ := os.Create(filepath.Join(blog.targetPath, "pictures", picture.targetName))
-
+		destinationFile, _ := os.Create(filepath.Join(pictureTargetPath, picture.hashName))
 		_, err := io.Copy(destinationFile, sourceFile.(io.Reader))
 		if err != nil {
-			println("复制图片“" + picture.pictureName + "”失败")
+			println("复制图片“" + picture.sourcePicturePath + "”失败")
 		}
 	}
 }
@@ -281,6 +298,13 @@ func gitOperate(blogList []Blog) {
 	fmt.Println("提交成功！")
 }
 
+func init() {
+	path, _ := filepath.Abs(".")
+	BLOG_PATH = filepath.Join(path, "asset", "blogs")
+	PICTURE_PATH = filepath.Join(path, "asset", "pictures")
+	REPOSITORY_URL = `https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures`
+}
+
 func main() {
 	filePath := "E:/desktop/blog"
 	//yamlPath := "./asset/blogs-list.yaml"
@@ -293,9 +317,9 @@ func main() {
 	if len(blogList) == 0 {
 		return
 	}
-
-	//yamlOperate(yamlPath, blogList)
-	dbOperate(blogList)
+	//
+	////yamlOperate(yamlPath, blogList)
+	//dbOperate(blogList)
 	gitOperate(blogList)
 
 }
