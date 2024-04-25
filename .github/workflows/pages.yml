@@ -1,26 +1,24 @@
-name: Pages
+name: Deploy Github
 
+# 在master分支发生push事件时触发。
 on:
   push:
     branches:
-      - main  # default branch
+      - master
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # If your repository depends on submodule, please see: https://github.com/actions/checkout
-          submodules: recursive
-      - name: Use Node.js 18
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装Node.js 18
         uses: actions/setup-node@v4
         with:
-          # Examples: 20, 18.19, >=16.20.2, lts/Iron, lts/Hydrogen, *, latest, current, node
-          # Ref: https://github.com/actions/setup-node#supported-version-syntax
           node-version: '18'
+
       - name: Cache NPM dependencies
         uses: actions/cache@v4
         with:
@@ -28,14 +26,27 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
-      - name: Install Dependencies
-        run: npm install --prefix / /publish/
-      - name: Build
+
+      - name: 安装相关依赖
+        working-directory: publish
+        run: npm install --silent --no-fund
+
+      - name: 复制博客文件
+        run: |
+          cd publish
+          rm -rf source/_posts
+          mkdir source/_posts
+          cp -rf ../asset/blogs/* ./source/_posts/
+
+      - name: 构建网站
+        working-directory: publish
         run: npm run build
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./publish/public
+          
   deploy:
     needs: build
     permissions:
@@ -49,3 +60,34 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    env:
+#      GITHUB_TOKEN: ${{ secrets.EASYBLOG }} # toKen私密变量
+#
+#    steps:
+#      - name: 检出仓库
+#        uses: actions/checkout@v4
+#
+#      - name: Restore NPM dependencies cache
+#        uses: actions/cache@v4
+#        with:
+#          path: node_modules
+#          key: ${{ runner.OS }}-npm-cache
+#          restore-keys: |
+#            ${{ runner.OS }}-npm-cache
+#
+#      - name: 覆盖博客文件
+#        run: |
+#          cd publish
+#          rm -rf source/_posts
+#          mkdir source/_posts
+#          cp -rf ../asset/blogs/* ./source/_posts/
+#
+#      - name: 生成静态页面
+#        run: |
+#          cd publish
+#          hexo clean
+#          hexo g
