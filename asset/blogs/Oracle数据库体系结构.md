@@ -1,4 +1,12 @@
-@[TOC](文章目录)
+---
+title: Oracle数据库体系结构
+date: 2020-12-17 15:54:11
+toc: true
+mathjax: true
+tags:
+- 数据库
+- oracle
+---
 
 ## Oracle系统体系结构由三个部分组成：**实例、物理结构和逻辑结构**
 ## 实例和物理结构（数据库）组成了Oracle服务器。
@@ -66,29 +74,32 @@ PGA(Program Global Area)：由每个服务进程、后台进程专有；每个�
 数据库的**物理结构与内存结构之间的交互**通过这些进程完成。
 ##### 1.2.3.1 <font color='red'>数据库复写器（DBWn）
 负责管理缓冲储存区。主要任务是将缓冲区的脏数据写入磁盘。
-<img src="https://img-blog.csdnimg.cn/20201215125746131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
+
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/043fe5eabf6f67b620004f455e9ff65e.png)
 
 ##### 1.2.3.2 <font color='red'>日志复写器（LGWR）
 负责管理日志缓冲区，将上次写入磁盘以来的全部日志缓冲区写入磁盘上的日志文件。
 
-<img src="https://img-blog.csdnimg.cn/20201215125529376.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/db4e77f2ab2774894f5af64263b94ecd.png)
 
 ##### 1.2.3.3 <font color='red'>系统监控进程（SMON）
 该实例启动时，执行**实例恢复**，还负责清理不再使用的临时段。
 
-<img src="https://img-blog.csdnimg.cn/2020121513053386.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/cb693c08fcce0d3f3b238c33444c1fa9.png)
 
 ##### 1.2.3.4 <font color='red'>进程监控器（PMON）
 该进程在用户进程出现故障时执行进程恢复，负责清理内存储区和释放该进程所使用的资源。
-<img src="https://img-blog.csdnimg.cn/20201215131036652.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
+
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/9f8ff208cad3045f3aca2e816fbfba0e.png)
 
 ##### 1.2.3.5 <font color='red'>检查点（CKPT）
-<img src="https://img-blog.csdnimg.cn/20201215131547916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
+
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/a7b7b17ad4fdd80c9bc07df0f71e439c.png)
 
 ##### 1.2.3.6 <font color='red'>归档进程</font>（ARCn）（可选）
 当ArchiveLog模式被设置时，自动归档联机重做日志文件，保存所有数据库变化。
-<img src="https://img-blog.csdnimg.cn/20201215131823213.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTY2ODkwMw==,size_16,color_FFFFFF,t_70#pic_center" width="50% " align="middle"/>
 
+![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/72c2721a0a15f574fd097d30ef0ab070.png)
 
 # 二、物理结构
 包括了数据文件、日志文件和控制文件。

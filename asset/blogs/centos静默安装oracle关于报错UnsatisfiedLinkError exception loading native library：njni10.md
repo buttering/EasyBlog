@@ -1,4 +1,15 @@
- 静默安装oracle时，日志文件中打印出如下语句
+---
+title: centos静默安装oracle关于报错UnsatisfiedLinkError exception loading native library：njni10
+date: 2020-11-19 14:35:52
+toc: true
+mathjax: true
+tags: 
+- 杂项
+- centos
+- oracle
+---
+ 
+静默安装oracle时，日志文件中打印出如下语句
 
 ![img](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/3e3a4611a17fc0188ca478c778f2bc0d/1141f1734f91d0695f51b2ae96727e62.png)
 

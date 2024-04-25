@@ -59,7 +59,6 @@ func getBlogList(path string) (blogsList []Blog) {
 	return
 }
 
-// https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/pictures/e8597689-0205-4a35-9076-09233385b7a4.png
 func extractPicture(blog *Blog) {
 	isUrl := func(path string) bool {
 		return strings.HasPrefix(path, `http://`) || strings.HasPrefix(path, `https://`)

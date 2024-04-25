@@ -1,3 +1,14 @@
+---
+title: 解决IDEA修改已有项目为maven项目时目录结构被改变的问题
+date: 2020-09-18 17:50:07
+toc: true
+mathjax: true
+tags: 
+- 杂项
+- idea
+- maven
+---
+
 Idea可以在项目根目录上右键选择“添加框架支持”，选择maven，为项目添加Maven支持。
 ![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/446167091db518e4736eeacdebd957da/dcb96eca0348bd69ee5a0e6ed0f3b35b.png)
 但这样会导致原有项目的目录结构被破坏。
