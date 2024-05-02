@@ -252,7 +252,7 @@ func gitOperate(blogList []Blog) {
 		summary = fmt.Sprintf("提交文件 [%s]", blogList[0].name)
 	} else {
 		summary = fmt.Sprintf(
-			"提交 %d 个文件\n"+
+			"提交 %d 个博客\n"+
 				"\n"+
 				"文件列表: [%s]",
 			len(blogList),
