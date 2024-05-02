@@ -1,3 +1,5 @@
+# Hexo主题的覆盖配置，可以使主题配置放置在 fluid 目录之外，避免在更新主题时丢失自定义的配置。
+
 #---------------------------
 # Hexo Theme Fluid
 # Author: Fluid-dev
@@ -701,7 +703,7 @@ post:
     specific: false
 
     # Options: mathjax | katex
-    engine: mathjax
+    engine: katex  # 使用hexo-renderer-markdown-it-plus插件进行latex渲染时，如果使用mathjax，一些不完全符合md语法的标题会渲染失败（如一级标题前没有空行）
 
   # 流程图，基于 mermaid-js，具体请见：https://hexo.fluid-dev.com/docs/guide/#mermaid-流程图
   # Flow chart, based on mermaid-js, see: https://hexo.fluid-dev.com/docs/en/guide/#mermaid
