@@ -183,23 +183,23 @@ func copyPicture(blog Blog) {
 	}
 }
 
-//func yamlOperate(yamlPath string, blogList []Blog) {
-//	fmt.Println("生成yaml文件")
-//	yamlStruct := tools.YamlReader(yamlPath)
-//	// 不变更已有的，只追加
-//	for _, blog := range blogList {
-//		if !blog.legal {
-//			continue
-//		}
-//		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
-//			Name:       blog.name,
-//			CreateDate: time.Now().Format("2006-01-02"),
-//			UpdateDate: time.Now().Format("2006-01-02"),
-//		})
-//	}
-//	tools.YamlWriter(yamlPath, &yamlStruct)
-//
-//}
+func yamlOperate(yamlPath string, blogList []Blog) {
+	fmt.Println("生成yaml文件")
+	yamlStruct := tools.YamlReader(yamlPath)
+	// 不变更已有的，只追加
+	for _, blog := range blogList {
+		if !blog.legal {
+			continue
+		}
+		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
+			Name:       blog.name,
+			CreateDate: time.Now().Format("2006-01-02"),
+			UpdateDate: time.Now().Format("2006-01-02"),
+		})
+	}
+	tools.YamlWriter(yamlPath, &yamlStruct)
+
+}
 
 func dbOperate(blogList []Blog) {
 	fmt.Println("导入数据库")
@@ -316,8 +316,9 @@ func main() {
 	if len(blogList) == 0 {
 		return
 	}
-	//
-	////yamlOperate(yamlPath, blogList)
+
+	// 改用github page进行博客部署，不需要额外记录博客信息
+	//yamlOperate(yamlPath, blogList)
 	//dbOperate(blogList)
 	gitOperate(blogList)
 
