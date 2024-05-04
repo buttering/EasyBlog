@@ -1,5 +1,5 @@
 ---
-title: 使用plotly离线模式报错‘UnicodeEncodeError: ‘gbk‘ codec can‘t encode character in position: ‘的解决方法
+title: '使用plotly离线模式报错‘UnicodeEncodeError: ‘gbk‘ codec can‘t encode character in position: ‘的解决方法'
 date: 2022-10-15 17:51:24
 toc: true
 mathjax: true
