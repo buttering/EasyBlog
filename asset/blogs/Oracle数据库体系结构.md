@@ -10,7 +10,7 @@ tags:
 
 ## Oracle系统体系结构由三个部分组成：**实例、物理结构和逻辑结构**
 ## 实例和物理结构（数据库）组成了Oracle服务器。
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/5b9810e2920220606ad15ab424f9ac38.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/5b9810e2920220606ad15ab424f9ac38.png)
 # 一、实例
 也成为服务器Server，是用来访问一个数据库文件集的**一个存储结构以及后台进程的集合**。总是打开一个且仅打开一个数据库，一个数据库可以被多个实例访问。
 
@@ -50,7 +50,7 @@ PGA(Program Global Area)：由每个服务进程、后台进程专有；每个�
 当客户进程访问oracle服务器时，会在oracle服务器端为用户进程分配相应的**服务进程**，并且为该服务进程分配相应的内存空间来存放其数据和控制信息，每一个**后台进程**也需要为其分配专用的存储空间。也就是**PGA**
 ### 1.2 进程结构
 分别为用户进程、服务器进程和后台进程。
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/3ba51db064968810f1883ab13250724a.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/3ba51db064968810f1883ab13250724a.png)
 
 ### 1.2.1 用户进程
 用户进程是要求Oracle服务器交互的一种进程。
@@ -75,31 +75,31 @@ PGA(Program Global Area)：由每个服务进程、后台进程专有；每个�
 ##### 1.2.3.1 <font color='red'>数据库复写器（DBWn）
 负责管理缓冲储存区。主要任务是将缓冲区的脏数据写入磁盘。
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/043fe5eabf6f67b620004f455e9ff65e.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/043fe5eabf6f67b620004f455e9ff65e.png)
 
 ##### 1.2.3.2 <font color='red'>日志复写器（LGWR）
 负责管理日志缓冲区，将上次写入磁盘以来的全部日志缓冲区写入磁盘上的日志文件。
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/db4e77f2ab2774894f5af64263b94ecd.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/db4e77f2ab2774894f5af64263b94ecd.png)
 
 ##### 1.2.3.3 <font color='red'>系统监控进程（SMON）
 该实例启动时，执行**实例恢复**，还负责清理不再使用的临时段。
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/cb693c08fcce0d3f3b238c33444c1fa9.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/cb693c08fcce0d3f3b238c33444c1fa9.png)
 
 ##### 1.2.3.4 <font color='red'>进程监控器（PMON）
 该进程在用户进程出现故障时执行进程恢复，负责清理内存储区和释放该进程所使用的资源。
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/9f8ff208cad3045f3aca2e816fbfba0e.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/9f8ff208cad3045f3aca2e816fbfba0e.png)
 
 ##### 1.2.3.5 <font color='red'>检查点（CKPT）
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/a7b7b17ad4fdd80c9bc07df0f71e439c.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/a7b7b17ad4fdd80c9bc07df0f71e439c.png)
 
 ##### 1.2.3.6 <font color='red'>归档进程</font>（ARCn）（可选）
 当ArchiveLog模式被设置时，自动归档联机重做日志文件，保存所有数据库变化。
 
-![](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/72c2721a0a15f574fd097d30ef0ab070.png)
+![](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/830522c4b066364191eadc5cbb0485d7/72c2721a0a15f574fd097d30ef0ab070.png)
 
 # 二、物理结构
 包括了数据文件、日志文件和控制文件。

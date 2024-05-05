@@ -34,7 +34,7 @@ wang@DESKTOP-55P8P0H:~/kernel$ uname -r
 ```bash
 git clone --depth=1 https://github.com/microsoft/WSL2-Linux-Kernel
 ```
-![对应版本release](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/aed2424a629ae84d5396aaf9d9093a34/13763bc1a0ce0270aeb3990ba6bea4c8.jpeg)
+![对应版本release](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/aed2424a629ae84d5396aaf9d9093a34/13763bc1a0ce0270aeb3990ba6bea4c8.jpeg)
 复制下载链接，下载tar包，解压
 ```bash
 wget https://github.om/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux-msft-wsl-5.10.16.3.tar.gz

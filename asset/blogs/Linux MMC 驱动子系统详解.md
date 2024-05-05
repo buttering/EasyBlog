@@ -21,7 +21,7 @@ mmc是比较老的存储卡了，sd是mmc的替代者，sdio是基于sd而额外
 
 CPU、MMC controller、存储设备之间的关联如下图所示，主要包括了MMC controller、总线、存储卡等内容的连接，针对控制器与设备的总线连接，主要包括时钟、数据、命令三种类型的引脚，而这些引脚中的cd引脚主要用于卡的在位检测，当mmc controller检测到该位的变化后，则会进行mmc card的注册或注销操作。
 
-![cpu mmc硬件关联图](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/319603986631c7006d61c0afa39a33c9.jpeg)
+![cpu mmc硬件关联图](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/319603986631c7006d61c0afa39a33c9.jpeg)
 
 
 ## 目录说明
@@ -53,14 +53,14 @@ MMC子系统从上到下分为3层
 
 针对不同芯片，实现不同控制器对应的驱动代码。
 
-![mmc子系统框架结构图](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/e87c1da5cde68259ed1f33f61fe6a152.jpeg)
+![mmc子系统框架结构图](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/e87c1da5cde68259ed1f33f61fe6a152.jpeg)
 
 
 块设备层与Linux的块设备子系统对接，实现块设备驱动以及完成请求，具体协议经过核心层的接口，最终通过控制器层完成传输，对MMC设备进行实际的操作。
 
 更详细的结构图如下，指明了个部分的相关实现文件：
 
-![在这里插入图片描述](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/00a1076a36325dcc59fb0280fae2b253.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/00a1076a36325dcc59fb0280fae2b253.png)
 
 
 mmc core指的是mmc 子系统的核心，这里的mmc表示的是mmc总线、结构、设备相关的统称，而下方文件名的mmc单指mmc卡，区别于sd卡和sdio卡。
@@ -82,7 +82,7 @@ drivers/mmc/core/mmc-ops.c（提供和mmc type card协议相关的操作）
 
 三者之间的关联图如下，每一个具体的总线均包括设备与驱动两部分，而每一个具体总线的所有添加的设备均链接至device下，每一个总线的所有注册的驱动均链接至drivers，而bus接口所有实现的功能也可以大致分为总线的注册、设备的注册、驱动的注册这三个部分。
 
-![设备-总线-驱动关联图](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/aab329af4b5b41195c2ef318c21f9036.jpeg)
+![设备-总线-驱动关联图](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/aab329af4b5b41195c2ef318c21f9036.jpeg)
 
 
 设备和对应的驱动必须依附于同一种总线
@@ -96,7 +96,7 @@ MMC驱动模型也是基于实际的硬件连接进行抽象的
 - 针对mmc、sd、tf卡具体设备，该子系统抽象为**mmc_card**，用于描述卡信息。mmc子系统提供年rescan接口用于mmc card的注册；
 - 针对mmc、sd、tf，mmc子系统完成了统一的**mmc driver**，针对mmc总线规范以及SD规范，其已经详细的定义了一个存储卡的通信方式、通信命令，因此LINUXmmc子系统定义了mmc driver，用于和mmc、sd、tf等卡的通信，而**不需要**驱动开发人员来开发卡驱动。
 
-![bus driver host card 关联图](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/0854870f47ba4c8366add07b619817d1.jpeg)
+![bus driver host card 关联图](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/f458025b97d662eade4badd77c4d0d83/0854870f47ba4c8366add07b619817d1.jpeg)
 
 
 特点:

@@ -102,7 +102,7 @@ func extractPicture(blog *Blog) {
 				start,
 				end,
 				hashName,
-				path.Join(REPOSITORY_URL, blog.hashName, hashName),
+				REPOSITORY_URL + "/" + blog.hashName + "/" + hashName, // 使用path.join会导致'https://'后的双斜杠变为单斜杠
 			},
 		)
 	}

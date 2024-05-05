@@ -11,7 +11,7 @@ tags:
  
 静默安装oracle时，日志文件中打印出如下语句
 
-![img](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/3e3a4611a17fc0188ca478c778f2bc0d/1141f1734f91d0695f51b2ae96727e62.png)
+![img](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/3e3a4611a17fc0188ca478c778f2bc0d/1141f1734f91d0695f51b2ae96727e62.png)
 
 提示Oracle NetConfiguration Assistant failed，原因是找不到libaio.so.1
 

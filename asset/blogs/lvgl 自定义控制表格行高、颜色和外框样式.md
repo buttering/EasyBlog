@@ -15,7 +15,7 @@ lvgl版本：8.3.7
 lvgl自带表格控件能够指定列宽，但是表格行高是根据内容动态渲染的。
 
 表格自带样式如图，带有蓝色的外框和白底。
-![在这里插入图片描述](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/56320abf44c3ede843a75010f28584b8.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/56320abf44c3ede843a75010f28584b8.png)
 
 如果想要手动控制表格行高、颜色和外框等属性，需要监听表格绘制事件，在事件中覆盖属性。下面给出相关代码：
 
@@ -153,9 +153,9 @@ typedef struct Style {
 3. 结构体属性赋值。
 
 ## 效果
-![在这里插入图片描述](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/70e860235860bb68b0d85bfdf622e035.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/70e860235860bb68b0d85bfdf622e035.png)
 去除了外框线和白底，自定义行高。
-![在这里插入图片描述](https:/raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/6550f649c241373984871022c66befe6.png)
+![在这里插入图片描述](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/b46077f88be412624886df2717b576be/6550f649c241373984871022c66befe6.png)
 
 
 根据配置实现了点击行选中的颜色更改。
