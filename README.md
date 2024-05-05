@@ -38,7 +38,7 @@
 
 项目所有文章和图片都位于同一个github仓库中：
 
-![image-20240505100150836](C:\Users\38412\AppData\Roaming\Typora\typora-user-images\image-20240505100150836.png)
+![image-20240505100150836](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/1f78f0ca0eaf84dc619cfb2f410691b9.png)
 
 - .github：存放github action的配置文件
 - asset：存放处理后的博客和图片，pictures起到了图床的作用
@@ -56,7 +56,7 @@
 
 在pictures目录中，对文章名和图片进行了哈希处理，如图：
 
-![image-20240505100811570](C:\Users\38412\AppData\Roaming\Typora\typora-user-images\image-20240505100811570.png)
+![image-20240505100811570](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/d1b2d1cf24c453fee44c832d54eab199.png)
 
 博客则直接按照原文件名放在blogs目录下。
 
@@ -430,7 +430,7 @@ hexo new page about
 
 进入github 项目的设置页面开启page功能。设置`Source`为`GitHub Actions`。
 
-![image-20240505163116047](利用github pages建立Serverless个人博客.assets/image-20240505163116047.png)
+![image-20240505163116047](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/54294a739dee82df93261e9e9f831ca9.png)
 
 #### 编写actions脚本文件
 
@@ -565,17 +565,17 @@ post:
 
 进入`github仓库->Settings->General->Features`，勾选 `Discussions`。
 
-![image-20240505170039793](利用github pages建立Serverless个人博客.assets/image-20240505170039793.png)
+![image-20240505170039793](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/4a4addf8209237898db6879f68ab9fac.png)
 
 #### 安装 Github Apps
 
 点击链接[GitHub Apps - giscus](https://github.com/apps/giscus) ，为本仓库安装应用。
 
-![image-20240505170017470](利用github pages建立Serverless个人博客.assets/image-20240505170017470.png)
+![image-20240505170017470](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/c9b0160db4e45a468b99e106198502dd.png)
 
 可以到 [giscus仓库](https://giscus.app/zh-CN) 检查自己的仓库是否满足giscus要求的条件。
 
-![image-20240505170207236](利用github pages建立Serverless个人博客.assets/image-20240505170207236.png)
+![image-20240505170207236](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/a4eb04b21045ea3e2ee0a04f5daf132a.png)
 
 #### 配置插件
 
