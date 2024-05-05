@@ -463,7 +463,7 @@ index:
   # 头图高度，屏幕百分比
   # Height ratio of banner image
   # Available: 0 - 100
-  banner_img_height: 80
+  banner_img_height: 70
 
   # 头图黑色蒙版的不透明度，available: 0 - 1.0， 1 是完全不透明
   # Opacity of the banner mask, 1.0 is completely opaque
@@ -531,8 +531,8 @@ index:
 #---------------------------
 post:
   banner_img: /img/封面图_时之歌.jpg
-  banner_img_height: 70
-  banner_mask_alpha: 0
+  banner_img_height: 60
+  banner_mask_alpha: 0.2
 
   # 文章在首页的默认封面图，当没有指定 index_img 时会使用该图片，若两者都为空则不显示任何图片
   # Path of the default post cover when `index_img` is not set. If both are empty, no image will be displayed
@@ -873,7 +873,7 @@ giscus:  # 从https://maling.io/posts/get-github-repo-id/获取
   category-id: DIC_kwDOLtp82M4CfIk6
   theme-light: light
   theme-dark: dark
-  mapping: pathname
+  mapping: title
   reactions-enabled: 1
   emit-metadata: 0
   input-position: bottom
