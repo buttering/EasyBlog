@@ -46,6 +46,8 @@ tags:
 
 使用giscus评论插件，利用github discussions实现博客的评论功能。
 
+使用LeanCloud实现访问统计。
+
 ## 实现
 
 ### 0. 项目框架
@@ -430,7 +432,7 @@ hexo new page about
 
 #### 测试博客
 
-自此，一个本地的博客网站即搭建成功，可以尝试将文档移入`_post`文件夹，而后运行`hexo g` 和 `hexo s` ，就可以在浏览器看到博客。
+自此，一个本地的博客网站即搭建成功，可以尝试手动将文档移入`_post`文件夹，而后在命令行内的 `publish` 文件夹下运行 `hexo g` 和 `hexo s` ，就可以在浏览器看到博客。
 
 最后记得使用`hexo clean` 清空生成的文件，避免影响到后面的部署。
 
@@ -528,7 +530,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-在完成了环境的初始化后，会自动将位于 `asset/blog` 中的博客文件复制到 `publish/source/_post` 目录内。而后的构建步骤，就会利用 `_post`  目录中的博客文件生成网站。
+github 工作流在完成了环境的初始化后，会自动将位于 `asset/blog` 中的博客文件复制到 `publish/source/_post` 目录内。而后的构建步骤，工作流就会利用 `_post`  目录中的博客文件生成网站。
 
 #### 修改配置
 
@@ -647,4 +649,8 @@ giscus:
 点击运行按钮，即可得到形如 `"id": "R_kgDOKjFfn1"` 和 `DIC_kwdOJPFfnc4CU9...` 就是我们需要的 `repoId` 和 `categoryId`。
 
 因为网站中文章的url是直接使用文章名进行定位的，如 `https://buttering.github.io/EasyBlog/2022/10/15/使用plotly离线模式报错UnicodeEncodeError：gbk codec can't encode character in position的解决方法/`，如果 `mapping:` 的值设为 `pathname` 或者 `url`，其在 github discussions中出现的标题，中文会被base64字符代替，严重影响观感，设为 `title` 可以解决这个问题。
+
+### 6. 实现访问统计
+
+
 
