@@ -704,11 +704,11 @@ footer:
 
 `content` 前三行是 Fluid 原有的页脚内容，建议不要删除，可稍作修改，保留 Fluid 的超链接，用于向更多人推广主题。
 
-新增的`div`标签用于实现功能。`duration.js` 包含的是功能代码，我们在博客目录的 `themes/fluid/source/js` 下创建  `duration.js` ，
+新增的`div`标签用于实现功能。`duration.js` 包含的是功能代码，我们在博客目录的 `source/js` 下创建  `duration.js` （如果没有`js`目录，创建即可），
 
 ~~如果直接创建`source/js/duration.js` 是无效的~~
 
-**针对fluid 1.9.7：**需要将 `content` 的 `<script src="/js/duration.js">` 这行改为 `<script src="<项目根目录名>/js/duration.js">`，如 `<script src="/EasyBlog/js/duration.js"></script>`
+**针对fluid 1.9.7：** 需要将 `content` 的 `<script src="/js/duration.js">` 这行改为 `<script src="<项目根目录名>/js/duration.js">`，如 `<script src="/EasyBlog/js/duration.js"></script>`
 
 js文件内容如下：
 
@@ -747,3 +747,4 @@ js文件内容如下：
 ```
 
 把 `start` 的时间改为自己的时间即可。
+

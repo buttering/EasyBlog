@@ -348,7 +348,7 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -1008,6 +1008,12 @@ links:
   # 友链的成员项
   # Member item of page
   items:
+    - {
+      title: "Kenger",
+      intro: "研究生舍友",
+      link: "https://blog.kenger.work/",
+      avatar: "https://blog.kenger.work/images/avatar.png"
+    }
     - {
       title: "Fluid Blog",
       intro: "主题博客",
