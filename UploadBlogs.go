@@ -35,16 +35,10 @@ type Blog struct {
 	legal         bool   // 成功通过解析
 }
 
-var (
-	BLOG_PATH      string
-	PICTURE_PATH   string
-	REPOSITORY_URL string
-)
-
-func getBlogList(path string) (blogsList []Blog) {
+func getBlogList() (blogsList []Blog) {
 	blogsList = make([]Blog, 0, 10)
 
-	fileList, err := os.ReadDir(path)
+	fileList, err := os.ReadDir(LOCAL_FILE_PATH)
 	if err != nil {
 		panic(err)
 	}
@@ -53,13 +47,13 @@ func getBlogList(path string) (blogsList []Blog) {
 		if !file.IsDir() && filepath.Ext(file.Name()) == ".md" {
 			fileName := file.Name()
 
-			blogsList = append(blogsList, Blog{fileName, tools.Hash(fileName), nil, path, false})
+			blogsList = append(blogsList, Blog{fileName, tools.Hash(fileName), nil, LOCAL_FILE_PATH, false})
 		}
 	}
 	return
 }
 
-func extractPicture(blog *Blog) {
+func ExtractPicture(blog *Blog) {
 	isUrl := func(path string) bool {
 		return strings.HasPrefix(path, `http://`) || strings.HasPrefix(path, `https://`)
 	}
@@ -145,7 +139,7 @@ func copyBlog(blog *Blog) {
 
 }
 
-func copyPicture(blog Blog) {
+func CopyPicture(blog Blog) {
 	pictureTargetPath := filepath.Join(PICTURE_PATH, blog.hashName)
 
 	for _, picture := range blog.pictures {
@@ -183,22 +177,21 @@ func copyPicture(blog Blog) {
 	}
 }
 
-func yamlOperate(yamlPath string, blogList []Blog) {
-	fmt.Println("生成yaml文件")
-	yamlStruct := tools.YamlReader(yamlPath)
+// yaml文件记录文章和对应的hash字符串，用于管理文章（增删改）
+func yamlOperate(blogList []Blog) {
+	fmt.Println("追加yaml文件")
+	yamlContent := tools.YamlReader(YAML_FILE_PATH)
 	// 不变更已有的，只追加
 	for _, blog := range blogList {
 		if !blog.legal {
 			continue
 		}
-		yamlStruct.Blogs = append(yamlStruct.Blogs, tools.Blog{
-			Name:       blog.name,
-			CreateDate: time.Now().Format("2006-01-02"),
-			UpdateDate: time.Now().Format("2006-01-02"),
+		yamlContent.Blogs = append(yamlContent.Blogs, tools.Blog{
+			Name: blog.name,
+			Hash: tools.Hash(blog.name),
 		})
 	}
-	tools.YamlWriter(yamlPath, &yamlStruct)
-
+	tools.YamlWriter(YAML_FILE_PATH, &yamlContent)
 }
 
 func dbOperate(blogList []Blog) {
@@ -217,7 +210,7 @@ func dbOperate(blogList []Blog) {
 	}
 }
 
-func gitOperate(blogList []Blog) {
+func GitOperate(blogList []Blog, sprintf func([]string) string) {
 	if len(blogList) == 0 {
 		return
 	}
@@ -247,18 +240,7 @@ func gitOperate(blogList []Blog) {
 	nameList := tools.Map(blogList, func(blog Blog) string {
 		return blog.name
 	})
-	var summary string
-	if len(nameList) == 1 {
-		summary = fmt.Sprintf("提交文件 [%s]", blogList[0].name)
-	} else {
-		summary = fmt.Sprintf(
-			"提交 %d 个博客\n"+
-				"\n"+
-				"文件列表: [%s]",
-			len(blogList),
-			strings.Join(nameList, ", "),
-		)
-	}
+	summary := sprintf(nameList)
 	commit, err := w.Commit(summary, &git.CommitOptions{
 		Author: &object.Signature{
 			Name: "Wang",
@@ -287,7 +269,8 @@ func gitOperate(blogList []Blog) {
 		if err == nil {
 			break
 		}
-		println("第 %d 次上传失败")
+		println("第 ", i, " 次上传失败")
+		time.Sleep(5 * time.Second)
 	}
 	if err != nil {
 		println("重试次数已达上限，上传失败")
@@ -297,29 +280,39 @@ func gitOperate(blogList []Blog) {
 	fmt.Println("提交成功！")
 }
 
-func init() {
-	path, _ := filepath.Abs(".")
-	BLOG_PATH = filepath.Join(path, "asset", "blogs")
-	PICTURE_PATH = filepath.Join(path, "asset", "pictures")
-	REPOSITORY_URL = `https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures`
-}
+// UploadBlogs 整理并提交新博客
+// 1. 预处理文章
+// 2. 将博客和图片放入asset文件夹
+// 3. 追加yaml文件 （TODO）
+// 4. git提交触发CI/CD流程
 
-func main() {
-	filePath := "E:/desktop/blog"
-	//yamlPath := "./asset/blogs-list.yaml"
-	blogList := getBlogList(filePath)
+func UploadBlogs() {
+	blogList := getBlogList()
 	for i := range blogList {
-		extractPicture(&blogList[i])
+		ExtractPicture(&blogList[i])
 		copyBlog(&blogList[i])
-		copyPicture(blogList[i])
+		CopyPicture(blogList[i])
 	}
 	if len(blogList) == 0 {
 		return
 	}
 
+	yamlOperate(blogList)
 	// 改用github page进行博客部署，不需要额外记录博客信息
-	//yamlOperate(yamlPath, blogList)
 	//dbOperate(blogList)
-	gitOperate(blogList)
+	GitOperate(blogList, func(nameList []string) (summary string) {
+		if len(nameList) == 1 {
+			summary = fmt.Sprintf("提交文件 [%s]", blogList[0].name)
+		} else {
+			summary = fmt.Sprintf(
+				"提交 %d 个博客\n"+
+					"\n"+
+					"文件列表: [%s]",
+				len(blogList),
+				strings.Join(nameList, ", "),
+			)
+		}
+		return
+	})
 
 }

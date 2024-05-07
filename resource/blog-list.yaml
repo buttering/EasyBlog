@@ -1,25 +1,103 @@
 blogs:
+    - name: Linux MMC 驱动子系统详解.md
+      hash: f458025b97d662eade4badd77c4d0d83
+    - name: Oracle数据库体系结构.md
+      hash: 830522c4b066364191eadc5cbb0485d7
+    - name: WSL 运行make提示No such file or directory. Stop.错误解决办法.md
+      hash: aed2424a629ae84d5396aaf9d9093a34
     - name: centos静默安装oracle关于报错UnsatisfiedLinkError exception loading native library：njni10.md
-      createDate: 2020-09-18
-      updateDate: 2024-04-18
-      target: []
+      hash: 3e3a4611a17fc0188ca478c778f2bc0d
+    - name: lvgl 自定义控制表格行高、颜色和外框样式.md
+      hash: b46077f88be412624886df2717b576be
+    - name: lvgl修改图片大小上限.md
+      hash: abfa20521afd41b0d82264b60a12411d
+    - name: printk函数出现延迟输出的问题.md
+      hash: 669bd53131198265ca89ebccd966e7d0
+    - name: 云计算及应用课程知识整理.md
+      hash: e1798231b7fe8663ac5c2dbe6b8e172c
+    - name: 使用plotly离线模式报错UnicodeEncodeError：gbk codec can‘t encode character in position的解决方法.md
+      hash: bdf03a9b9bdacaaf60d1f899c0222865
+    - name: 利用github pages建立Serverless个人博客.assets
+      hash: 4100dbaa14c854fc201cc3ae3b63f6fc
+    - name: 利用github pages建立Serverless个人博客.md
+      hash: 669ba7c00eb5d68928ff05646a13a572
+    - name: 大型数据库课程知识整理.md
+      hash: 1ad5da639063572aed03797b3f3ee003
+    - name: 机器学习与数据挖掘——第二章 数据与数据预处理.md
+      hash: 2010bebf5d95d4fb200ca7cde61cc225
+    - name: 王道408数据结构——第一章 绪论.md
+      hash: 4b76a19cc20cd752f6f98ce9b065de56
+    - name: 王道408数据结构——第七章 查找.md
+      hash: f552c42121cd99be185059d96277d3fc
+    - name: 王道408数据结构——第三章 栈和队列.md
+      hash: a3631139faff2eadeb068e6897fc03aa
+    - name: 王道408数据结构——第二章 线性表.md
+      hash: e7f1f464eebf3908b6443b091c1c272b
+    - name: 王道408数据结构——第五章 树与二叉树.md
+      hash: dd0c78377c52ad716ec82b3e466442ad
+    - name: 王道408数据结构——第八章 排序.md
+      hash: 8273d452249254d750859c1176598d0c
+    - name: 王道408数据结构——第六章 图.md
+      hash: d9b9a23eb6bb268056cb5f255b1f82bf
+    - name: 王道408数据结构——第四章 串（KMP算法）.md
+      hash: 6773add583de23d26543dace34f704db
     - name: 电子商务应用课程知识整理 第一章-电子商务概述与类型.md
-      createDate: 2020-11-19
-      updateDate: 2024-04-18
-      target: []
+      hash: 3085b19dd8b68575277c208ba51f3355
     - name: 电子商务应用课程知识整理 第三章-网络营销.md
-      createDate: 2020-
-      updateDate: 18005-04-18
-      target: []
+      hash: 5cb6617f8064ca85e7e7dfeb691d7fc2
     - name: 电子商务应用课程知识整理 第二章-电子商务相关知识与技术.md
-      createDate: 18005-04-18
-      updateDate: 18005-04-18
-      target: []
+      hash: 2a32309b4b8a25012739d8566695a668
+    - name: 电子商务应用课程知识整理 第五章-搜索引擎优化（SEO）.md
+      hash: 5f32b0d40ddde72dae61888ae841c9e2
+    - name: 电子商务应用课程知识整理 第六章-数据挖掘.md
+      hash: 704cc572a051085a93bc4c58728de44c
     - name: 电子商务应用课程知识整理 第四章-搜索引擎.md
-      createDate: 18005-04-18
-      updateDate: 18005-04-18
-      target: []
+      hash: c96ef9b94f911bfc26d121dce6b004f4
+    - name: 美团240309春招实习笔试——小美的区间删除.md
+      hash: 743ae9d334e36f41dd0014810e226e9a
+    - name: 美团240309春招实习笔试——小美的朋友关系（反向并查集）.md
+      hash: 9680ca32e93a2e9563070c312c63af32
+    - name: 美团240316春招实习笔试——小美的逆序对（树状数组）.md
+      hash: 7e18a29bd11f328f4eaf4eb768a8795a
     - name: 解决IDEA修改已有项目为maven项目时目录结构被改变的问题.md
-      createDate: 18005-04-18
-      updateDate: 18005-04-18
-      target: []
+      hash: 446167091db518e4736eeacdebd957da
+    - name: 软件体系结构知识点整理.md
+      hash: e879f3b12191b596993886eefc10c94b
+    - name: 软件测试技术（一）软件测试概述.md
+      hash: 63dc9e516002577e1c79bab09d041a70
+    - name: 软件测试技术（三）系统测试.md
+      hash: 2a1c616c9e0c08fa05f80ac483afe3de
+    - name: 软件测试技术（二）单元测试和集成测试.md
+      hash: faca62f20bc850af0ddacc6c0acb689c
+    - name: 软件配置管理（一）配置管理概念与目标.md
+      hash: 6861f2900b643568f7448d202cf96570
+    - name: 软件配置管理（三）软件配置管理核心功能.md
+      hash: 7244875005688723c606e978afe687d4
+    - name: 软件配置管理（二）配置管理角色与过程.md
+      hash: 7624914ea952bb9c5a4141d0507475e8
+    - name: 软件配置管理（五）常用重构技巧.md
+      hash: d7d36bc5e53fc1be46c0de11497873a0
+    - name: 软件配置管理（六）常用配置软件配置工具指令.md
+      hash: f464f31d4a618e6e3d5b9b16e60107ac
+    - name: 软件配置管理（四）代码味道与重构.md
+      hash: 8b997ce184cbaeb5953243041e3fdd76
+    - name: 软件项目组织管理（一）项目管理概述.md
+      hash: 7beb4de531bc10a8f8136637596228f0
+    - name: 软件项目组织管理（七）项目成本管理.md
+      hash: 19bfa49f91990da256599f1e293d0dea
+    - name: 软件项目组织管理（九）项目人力资源管理.md
+      hash: 7ceb73130963f7b9eb6704045c8fadfa
+    - name: 软件项目组织管理（二、三）项目管理与信息技术环境、项目管理过程组.md
+      hash: a4fac9edc1c55b5e8ac808ed729cbf15
+    - name: 软件项目组织管理（五）项目范围管理.md
+      hash: b768a8a17186332a2078d2fe54ca9fac
+    - name: 软件项目组织管理（八）项目质量管理.md
+      hash: 7e8e2ed90e1c4d2193fa9a1ed729996e
+    - name: 软件项目组织管理（六）项目时间管理.md
+      hash: ba9168c0f3f5ab12bc3fc3e7be8c3d2a
+    - name: 软件项目组织管理（十一）项目风险管理、项目采购管理.md
+      hash: 343060ea2004040049663d08f08bb101
+    - name: 软件项目组织管理（十）项目沟通管理.md
+      hash: dc59bda1a7f5d71fd3732b6e17e26466
+    - name: 软件项目组织管理（四）项目集成管理.md
+      hash: 85c3d3acfd77324ee1d332b68c144438
