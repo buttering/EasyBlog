@@ -656,7 +656,11 @@ giscus:
 
 到[LeanCloud](https://console.leancloud.app/apps)注册一个免费账户，创建一个开发板应用后，再创建一个Class（依次点击`数据存储`->`结构化存储`->`创建Class`），权限给到最大。
 
+![image-20240507201920116](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/685cde4dc083ff9722fcea00f98bbe61.png)
+
 然后在`设置`->`应用凭证`里找到AppID与AppKey。
+
+![image-20240507202035553](https://raw.githubusercontent.com/buttering/EasyBlogs/master/asset/pictures/669ba7c00eb5d68928ff05646a13a572/5fbb7121324635c30ee6ba8dcc089828.png)
 
 修改 `_config.fluid.yml`：
 
