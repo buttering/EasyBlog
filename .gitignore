@@ -1,3 +1,5 @@
 /resource/githubPublicKey
 /publish/node_modules/
 /publish/public/
+
+/tmp

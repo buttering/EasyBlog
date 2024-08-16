@@ -259,7 +259,7 @@ func GitOperate(blogList []Blog, sprintf func([]string) string) {
 		println(err.Error())
 	}
 
-	for i := 0; i < 3; i++ {
+	for i := 1; i <= 3; i++ {
 		err = r.Push(&git.PushOptions{
 			RemoteName: "origin",
 			RemoteURL:  `git@github.com:buttering/EasyBlogs.git`,
@@ -269,7 +269,7 @@ func GitOperate(blogList []Blog, sprintf func([]string) string) {
 		if err == nil {
 			break
 		}
-		println("第 ", i, " 次上传失败")
+		println("第 ", i, " 次上传失败, 失败原因：", err.Error())
 		time.Sleep(5 * time.Second)
 	}
 	if err != nil {
