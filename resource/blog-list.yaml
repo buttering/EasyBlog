@@ -101,3 +101,5 @@ blogs:
       hash: dc59bda1a7f5d71fd3732b6e17e26466
     - name: 软件项目组织管理（四）项目集成管理.md
       hash: 85c3d3acfd77324ee1d332b68c144438
+    - name: 正则表达式和 shell 通配符展开.md
+      hash: 0537e6df1d13d23bf545377d8fb69d12
