@@ -4,6 +4,8 @@ date: 2024-05-05 17:20:00
 toc: true
 mathjax: true
 disableNunjucks: true
+categories:
+- 杂项
 tags:
 - 博客
 - github

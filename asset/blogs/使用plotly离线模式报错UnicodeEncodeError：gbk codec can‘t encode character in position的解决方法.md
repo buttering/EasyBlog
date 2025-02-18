@@ -3,8 +3,9 @@ title: '使用plotly离线模式报错‘UnicodeEncodeError: ‘gbk‘ codec can
 date: 2022-10-15 17:51:24
 toc: true
 mathjax: true
-tags:
+categories:
 - 杂项
+tags:
 - plotly
 - 编码
 - gbk

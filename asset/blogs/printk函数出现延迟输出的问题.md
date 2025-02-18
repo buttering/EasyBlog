@@ -3,8 +3,9 @@ title: printk函数出现延迟输出的问题
 date: 2022-10-15 17:51:24
 toc: true
 mathjax: true
-tags:
+categories:
 - 杂项
+tags:
 - linux
 - 内核
 ---

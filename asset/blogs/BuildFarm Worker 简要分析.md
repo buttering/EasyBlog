@@ -3,6 +3,8 @@ title: BuildFarm Worker 简要分析
 date: 2024-08-15 18:49:29
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags:
 - buildfarm
 - 构建系统

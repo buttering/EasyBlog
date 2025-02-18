@@ -3,6 +3,8 @@ title: Java 双亲委派机制
 date: 2024-11-25 17:24:29
 toc: true
 mathjax: true
+categories:
+- Java
 tags:
 - Java
 - JVM

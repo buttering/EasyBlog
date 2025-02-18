@@ -3,6 +3,8 @@ title: WSL2 安装 Defects4j
 date: 2024-11-14 15:35:29
 toc: true
 mathjax: true
+categories:
+- 软件安装
 tags:
 - WSL
 - WSL2

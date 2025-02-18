@@ -3,6 +3,8 @@ title: Linux MMC 驱动子系统详解
 date: 2023-02-07 15:39:13
 toc: true
 mathjax: true
+categories:
+- 杂项
 tags:
 - linux
 - MMC

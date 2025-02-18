@@ -3,6 +3,8 @@ title: 使用 GDB 或 Delve 对已经运行起来的 Go 程序进行远程调试
 date: 2024-11-18 13:36:29
 toc: true
 mathjax: true
+categories:
+- Golang
 tags:
 - Golang
 - GDB

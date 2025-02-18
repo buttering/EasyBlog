@@ -3,6 +3,8 @@ title: 使用docker安装joern
 date: 2025-02-18 15:27:42
 toc: true
 mathjax: true
+categories:
+- 软件安装
 tags: 
 - docker
 - joern

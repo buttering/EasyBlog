@@ -3,6 +3,8 @@ title: Bazel 编译 java 代码为独立运行的 jar 包的方法
 date: 2024-08-12 10:40:20
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags: 
 - bazel
 - java

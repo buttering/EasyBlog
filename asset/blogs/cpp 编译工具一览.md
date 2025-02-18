@@ -3,6 +3,8 @@ title: cpp 编译工具一览
 date: 2024-07-26 14:25:20
 toc: true
 mathjax: true
+categories:
+- 杂项
 tags: 
 - gnu
 - c++

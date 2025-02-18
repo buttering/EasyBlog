@@ -3,6 +3,8 @@ title: find 查找 Bazel 构建覆盖率文件的一个☝️坑
 date: 2024-06-20 15:29:59
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags: 
 - bazel
 - linux

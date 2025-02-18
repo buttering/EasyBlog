@@ -3,6 +3,8 @@ title: lvgl 自定义控制表格行高、颜色和外框样式
 date: 2023-07-24 10:18:59
 toc: true
 mathjax: true
+categories:
+- LVGL
 tags:
 - lvgl
 - GUI

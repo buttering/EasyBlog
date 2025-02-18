@@ -3,6 +3,8 @@ title: Oracle数据库体系结构
 date: 2020-12-17 15:54:11
 toc: true
 mathjax: true
+categories:
+- 课程学习
 tags:
 - 数据库
 - oracle

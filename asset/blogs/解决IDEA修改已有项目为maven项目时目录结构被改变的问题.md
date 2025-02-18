@@ -3,6 +3,8 @@ title: 解决IDEA修改已有项目为maven项目时目录结构被改变的问�
 date: 2020-09-18 17:50:07
 toc: true
 mathjax: true
+categories:
+- IDE
 tags: 
 - 杂项
 - idea

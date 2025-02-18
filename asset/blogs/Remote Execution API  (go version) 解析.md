@@ -3,6 +3,8 @@ title: Remote Execution API  (go version) 解析
 date: 2024-08-15 18:54:29
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags:
 - remote execution api
 - buildfarm

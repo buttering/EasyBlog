@@ -3,6 +3,8 @@ title: BuildFarm Worker 配置自定义镜像
 date: 2024-08-15 18:50:29
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags:
 - buildfarm
 - 构建系统

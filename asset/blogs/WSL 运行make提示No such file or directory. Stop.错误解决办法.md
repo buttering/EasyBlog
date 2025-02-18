@@ -3,6 +3,8 @@ title: 'WSL 运行make提示/lib/modules/xxx/build: No such file or directory. S
 date: 2022-11-24 18:26:16
 toc: true
 mathjax: true
+categories:
+- 杂项
 tags:
 - WSL
 - 驱动

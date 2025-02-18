@@ -3,6 +3,8 @@ title: BuildFarm 低版本遇到的 re api 兼容性问题
 date: 2024-08-12 10:38:20
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags: 
 - buildfarm
 - remote execution api

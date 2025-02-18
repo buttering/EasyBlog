@@ -3,6 +3,8 @@ title: lvgl修改图片大小上限
 date: 2024-01-09 18:43:06
 toc: true
 mathjax: true
+categories:
+- LVGL
 tags:
 - lvgl
 - GUI

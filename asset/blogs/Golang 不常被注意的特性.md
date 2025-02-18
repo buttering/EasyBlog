@@ -3,6 +3,8 @@ title: Golang 不常被注意的特性
 date: 2024-11-14 15:35:29
 toc: true
 mathjax: true
+categories:
+- Golang
 tags:
 - Golang
 - 编程语言

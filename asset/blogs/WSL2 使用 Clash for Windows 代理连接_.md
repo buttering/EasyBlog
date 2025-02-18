@@ -3,6 +3,8 @@ title: WSL2 使用 Clash for Windows 代理连接
 date: 2024-11-14 15:35:29
 toc: true
 mathjax: true
+categories:
+- 网络
 tags:
 - WSL
 - WSL2

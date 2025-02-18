@@ -3,6 +3,8 @@ title: 正则表达式和 shell 通配符展开
 date: 2024-09-14 14:55:29
 toc: true
 mathjax: true
+categories:
+- 杂项
 tags:
 - 正则表达式
 - shell

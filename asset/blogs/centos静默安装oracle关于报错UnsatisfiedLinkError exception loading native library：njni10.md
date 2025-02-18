@@ -3,6 +3,8 @@ title: centos静默安装oracle关于报错UnsatisfiedLinkError exception loadin
 date: 2020-11-19 14:35:52
 toc: true
 mathjax: true
+categories:
+- 软件安装
 tags: 
 - 杂项
 - centos

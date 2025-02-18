@@ -3,6 +3,8 @@ title: Bazel 报错：/tmp/external/gcc_toolchain_x86_64_files/bin/x86_64-linux-
 date: 2024-06-20 15:27:42
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags: 
 - bazel
 - cpp

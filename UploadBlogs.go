@@ -262,7 +262,7 @@ func GitOperate(blogList []Blog, sprintf func([]string) string) {
 	for i := 1; i <= 3; i++ {
 		err = r.Push(&git.PushOptions{
 			RemoteName: "origin",
-			RemoteURL:  `git@github.com:buttering/EasyBlogs.git`,
+			RemoteURL:  `git@github.com:buttering/EasyBlog.git`,
 			Auth:       privateKey,
 			Progress:   os.Stdout,
 		})

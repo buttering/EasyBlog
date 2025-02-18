@@ -103,3 +103,13 @@ blogs:
       hash: 85c3d3acfd77324ee1d332b68c144438
     - name: 正则表达式和 shell 通配符展开.md
       hash: 0537e6df1d13d23bf545377d8fb69d12
+    - name: 使用GDB或Delve对已经运行起来的Go程序进行远程调试.md
+      hash: 8fd7e0c88e79ac2f30a8e8853a833c73
+    - name: Java 双亲委派机制.md
+      hash: 8e8733471e0331beb1c691c2212411dc
+    - name: 秒杀系统设计.md
+      hash: 23e943673f8378a939734f33a6fd0c4a
+    - name: Kubectl-fzf：kubectl自动补全插件.md
+      hash: 77e95e18b901c5372df99f5dff8d9110
+    - name: joern安装和使用.md
+      hash: 87868a97442dd2075413f3b9cbf9194c

@@ -3,6 +3,8 @@ title: 利用 Java RMI 实现 sidecar 远程构建
 date: 2024-08-12 10:33:20
 toc: true
 mathjax: true
+categories:
+- Java
 tags: 
 - java
 - k8s

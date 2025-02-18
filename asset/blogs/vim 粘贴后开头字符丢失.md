@@ -3,6 +3,8 @@ title: vim 粘贴后开头字符丢失
 date: 2024-08-12 10:45:20
 toc: true
 mathjax: true
+categories:
+- 杂项
 tags: 
 - vim
 - linux

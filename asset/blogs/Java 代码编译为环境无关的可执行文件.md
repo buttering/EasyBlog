@@ -3,6 +3,8 @@ title: Java 代码编译为环境无关的可执行文件
 date: 2024-08-15 18:53:29
 toc: true
 mathjax: true
+categories:
+- Java
 tags:
 - java
 - 编译

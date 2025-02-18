@@ -3,6 +3,8 @@ title: BuildFarm Server 简要分析
 date: 2024-08-15 18:48:29
 toc: true
 mathjax: true
+categories:
+- Remote Execution
 tags:
 - buildfarm
 - remote execution api

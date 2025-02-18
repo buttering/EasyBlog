@@ -3,6 +3,8 @@ title: Kubectl-fzf：kubectl自动补全插件
 date: 2025-02-18 10:27:42
 toc: true
 mathjax: true
+categories:
+- 软件安装
 tags: 
 - k8s
 - kubectl
